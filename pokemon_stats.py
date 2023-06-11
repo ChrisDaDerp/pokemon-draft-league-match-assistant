@@ -35,7 +35,10 @@ class Pokemon:
     def __init__(self, name, is_my_team):
         self.__name = name.lower()
 
-        if requests.get("https://pokeapi.co/api/v2/pokemon/" + self.__name).status_code == 200:
+        pokemon = requests.get("https://pokeapi.co/api/v2/pokemon/" + self.__name.lower())
+        # If the API returns data, the Pokemon object is made.
+        if self.__name != "" and pokemon.status_code == 200:
+            self.__pokemon = pokemon.json()
             self.__is_valid = True
             self.__base_hp = self.__get_base_stat(HP)
             self.__base_attack = self.__get_base_stat(ATTACK)
@@ -62,12 +65,16 @@ class Pokemon:
             else:
                 self.__text_color = BLUE
 
+        # If the API does not return data, the Pokemon object is flagged as invalid.
         else:
             self.__is_valid = False
-            link = 'https://pokeapi.co/'
-            print(RED + BOLD + "ERROR: '" + self.__name + "' was not found when consulting PokeAPI (" + 
-                        link +
-                        "). Maybe there was a typo?" + END)
+            if self.__name == "":
+                print(RED + BOLD + "No Pokémon were entered. Continuing.")
+            else:
+                link = 'https://pokeapi.co/'
+                print(RED + BOLD + "ERROR: '" + self.__name + "' was not found when consulting PokeAPI (" + 
+                            link +
+                            "). Maybe there was a typo?" + END)
 
     def __parse_name(self, name):
         '''
@@ -95,7 +102,7 @@ class Pokemon:
             return (name[0].upper()) + name[1:]
         
         # All Pokémon with alternate forms.
-        hyphenated_names = ["porygon-2", "ho-oh", "porygon-z", "wo-chien", "chi-yu", "chien-pao", "ting-lu"]
+        hyphenated_names = ["ho-oh", "porygon-z", "wo-chien", "chi-yu", "chien-pao", "ting-lu"]
         alternate_forms = ["tauros", "castform", "kyogre", "groudon", "deoxys", "burmy", "wormadam", "cherrim", "rotom", "dialga", "palkia", "giratina",
                            "shaymin", "basculin", "darmanitan", "tornadus", "thundurus", "landorus", "enamorus", "kyruem", "meloetta", "greninja", "aegislash",
                            "pumpkaboo", "gourgeist", "zygarde", "hoopa", "lycanroc", "wishiwashi", "minior", "necrozma", "toxtricity", "eiscue", "zacian",
@@ -129,8 +136,7 @@ class Pokemon:
 
     def __get_base_stat(self, stat):
         '''Gets base stat from PokeAPI and sets it.'''
-        pokemon = requests.get("https://pokeapi.co/api/v2/pokemon/" + self.__name.lower()).json()
-        return int(pokemon["stats"][stat]["base_stat"])
+        return int(self.__pokemon["stats"][stat]["base_stat"])
     
     def __calculate_hp(self):
         '''Calculates the HP the Pokémon will have at level LEVEL based on the HP formula.'''
@@ -158,8 +164,7 @@ class Pokemon:
         nature = 1.1
 
         # Pokémon stat calculation formula. Cannot be used for HP as it uses a different formula.
-        stat = floor(floor((2 * base_stat + iv + floor(ev/4)) * LEVEL / 100 + 5) * nature)
-        return stat
+        return floor(floor((2 * base_stat + iv + floor(ev/4)) * LEVEL / 100 + 5) * nature)
     
     def __calculate_scarf(self):
         '''Calculates the speed of a Pokémon holding a Choice Scarf.'''
@@ -216,10 +221,9 @@ def compare_teams(my_team, opponent_team):
 
 def print_pokemon_list(sorted_pokemon_list):
     '''Prints the Pokémon and the selected stat in order and in a clearly legible way.'''
-
     # Error handler, so an empty table isn't printed.
     if len(sorted_pokemon_list) == 0:
-        print(RED + BOLD + "ERROR: No valid Pokémon provided. Please try again.")
+        print(RED + BOLD + "ERROR: No valid Pokémon were provided. Please try again.")
         return
 
     # A table of all valid Pokémon will be printed.
