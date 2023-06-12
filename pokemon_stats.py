@@ -82,8 +82,8 @@ COMMON_NAMES["meloetta"] = "meloetta-aria"
 COMMON_NAMES["meloetta-a"] = "meloetta-aria"
 COMMON_NAMES["meloetta-p"] = "meloetta-pirouette"
 COMMON_NAMES["meowstic"] = "meowstic-male"
-COMMON_NAMES["pumpkaboo"] = "pumpkaboo-base"
-COMMON_NAMES["gourgeist"] = "gourgeist-base"
+COMMON_NAMES["pumpkaboo"] = "pumpkaboo-large"
+COMMON_NAMES["gourgeist"] = "gourgeist-large"
 COMMON_NAMES["zygarde"] = "zygarde-base"
 COMMON_NAMES["zygarde-b"] = "zygarde-base"
 COMMON_NAMES["zygarde-c"] = "zygarde-complete"
@@ -180,6 +180,7 @@ COMMON_NAMES["drago"] = "regidrago"
 COMMON_NAMES["articuno-g"] = "articuno-galar"
 COMMON_NAMES["zapdos-g"] = "zapdos-galar"
 COMMON_NAMES["moltres-g"] = "moltres-galar"
+COMMON_NAMES["basculegion"] = "basculegion-male"
 # I can't find how the Paldean Tauros forms are stored on PokeAPI so I am excluding them.
 COMMON_NAMES["wooper-p"] = "wooper-paldea"
 COMMON_NAMES["palafin-h"] = "palafin-hero"
@@ -248,8 +249,8 @@ class Pokemon:
     def __init__(self, name, is_my_team):
         self.__name = name.lower()
         # Replaces name with assumed name to avoid errors from mistakes.
-        if name.lower() in COMMON_NAMES:
-            self.__name = COMMON_NAMES[name]
+        if self.__name in COMMON_NAMES:
+            self.__name = COMMON_NAMES[self.__name]
 
         pokemon = requests.get("https://pokeapi.co/api/v2/pokemon/" + self.__name.lower())
         # If the API returns data, the Pokemon object is made.
@@ -299,7 +300,7 @@ class Pokemon:
         For example, "Landorus-Therian" instead of "landorus-therian" or "Roaring Moon" instead of "roaring-moon".
         '''
         # Names with special characters.
-        if name in SPECIAL_NAMES:
+        if name.lower() in SPECIAL_NAMES:
             return SPECIAL_NAMES[name]
     
         # Names without anything special.
