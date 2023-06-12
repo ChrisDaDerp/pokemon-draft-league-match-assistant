@@ -12,6 +12,8 @@ import requests
 from math import floor
 # Tabulate makes the table look nice.
 from tabulate import tabulate
+# Colorama allows for color printing in more terminals than ANSI escape codes.
+import colorama
 
 # Indexes of stats from the API call.
 HP = 0
@@ -22,14 +24,15 @@ SP_DEFENSE = 4
 SPEED = 5
 
 # Values for stat calculations.
+# These values are all the maximum possible.
 IV = 31
 EV = 252
 NATURE = 1.1
 LEVEL = 100
 
 # Formatting for printing to terminal.
-RED = "\u001b[31m"
-BLUE = "\u001b[34m"
+RED = colorama.Fore.RED
+BLUE = colorama.Fore.BLUE
 BOLD = "\033[1m"
 END = "\033[0m"
 
@@ -41,6 +44,7 @@ COMMON_NAMES["nidoran"] = "nidoran-m"
 COMMON_NAMES["farfetch'd"] = "farfetchd"
 COMMON_NAMES["mrmime"] = "mr-mime"
 COMMON_NAMES["mr.mime"] = "mr-mime"
+COMMON_NAMES["skarm"] = "skarmory"
 COMMON_NAMES["deoxys"] = "deoxys-normal"
 COMMON_NAMES["deoxys-n"] = "deoxys-normal"
 COMMON_NAMES["deoxys-a"] = "deoxys-attack"
@@ -70,6 +74,7 @@ COMMON_NAMES["thundurus-i"] = "thundurus-incarnate"
 COMMON_NAMES["thundurus-t"] = "thundurus-therian"
 COMMON_NAMES["landorus"] = "landorus-therian"
 COMMON_NAMES["landorus-t"] = "landorus-therian"
+COMMON_NAMES["landot"] = "landorus-therian"
 COMMON_NAMES["lando-t"] = "landorus-therian"
 COMMON_NAMES["landorus-i"] = "landorus-incarnate"
 COMMON_NAMES["keldeo"] = "keldeo-ordinary"
@@ -163,11 +168,15 @@ COMMON_NAMES["indeedee-f"] = "indeedee-female"
 COMMON_NAMES["morpeko"] = "morpeko-full-belly"
 COMMON_NAMES["morpeko-f"] = "morpeko-full-belly"
 COMMON_NAMES["morpeko-h"] = "morpeko-hangry"
+COMMON_NAMES["pult"] = "dragapult"
 COMMON_NAMES["urshifu"] = "urshifu-single-strike"
 COMMON_NAMES["urshifu-s"] = "urshifu-single-strike"
 COMMON_NAMES["urshifu-ss"] = "urshifu-single-strike"
 COMMON_NAMES["urshifu-r"] = "urshifu-single-strike"
 COMMON_NAMES["urshifu-rs"] = "urshifu-single-strike"
+COMMON_NAMES["eleki"] = "regieleki"
+COMMON_NAMES["leki"] = "regieleki"
+COMMON_NAMES["drago"] = "regidrago"
 COMMON_NAMES["articuno-g"] = "articuno-galar"
 COMMON_NAMES["zapdos-g"] = "zapdos-galar"
 COMMON_NAMES["moltres-g"] = "moltres-galar"
