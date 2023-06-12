@@ -12,13 +12,21 @@ from math import floor
 # Tabulate makes the table look nice.
 from tabulate import tabulate
 
+# Indexes of stats from the API call.
 HP = 0
 ATTACK = 1
 DEFENSE = 2
 SP_ATTACK = 3
 SP_DEFENSE = 4
 SPEED = 5
+
+# Values for stat calculations.
+IV = 31
+EV = 252
+NATURE = 1.1
 LEVEL = 100
+
+# Formatting for printing to terminal.
 RED = "\u001b[31m"
 BLUE = "\u001b[34m"
 BOLD = "\033[1m"
@@ -60,6 +68,7 @@ class Pokemon:
 
             self.__pretty_name = self.__parse_name(self.__name)
 
+            # For setting text color for printing to terminal.
             if is_my_team: 
                 self.__text_color = RED
             else:
@@ -73,8 +82,8 @@ class Pokemon:
             else:
                 link = 'https://pokeapi.co/'
                 print(RED + BOLD + "ERROR: '" + self.__name + "' was not found when consulting PokeAPI (" + 
-                            link +
-                            "). Maybe there was a typo?" + END)
+                            link + END + RED + 
+                            "). Check for a typo, or if the Pokémon has alternate forms. (E.g. 'landorus' should either be 'landorus-incarnate' or 'landorus-therian'.)" + END)
 
     def __parse_name(self, name):
         '''
@@ -140,17 +149,12 @@ class Pokemon:
     
     def __calculate_hp(self):
         '''Calculates the HP the Pokémon will have at level LEVEL based on the HP formula.'''
-        # Assume highest possible stats.
-        iv = 31
-        ev = 252
-        # There is no nature for HP.
-
         # Shedinja always has 1 HP, which technically goes against the HP formula.
         if self.__name == "shedinja":
             return 1
         
         # HP calculation formula.
-        return floor((2 * self.__base_hp + iv + floor(ev/4)) * LEVEL / 100 + LEVEL + 10)
+        return floor((2 * self.__base_hp + IV + floor(EV/4)) * LEVEL / 100 + LEVEL + 10)
 
 
     def __calculate_stat(self, base_stat):
@@ -158,13 +162,8 @@ class Pokemon:
         Sets the actual stat that the Pokémon will have at level LEVEL based on the standard stat formula.
         Note that it is impossible to have all of these stats at once due to how natures and EVs work.
         '''
-        # Assume highest possible stats.
-        iv = 31
-        ev = 252
-        nature = 1.1
-
         # Pokémon stat calculation formula. Cannot be used for HP as it uses a different formula.
-        return floor(floor((2 * base_stat + iv + floor(ev/4)) * LEVEL / 100 + 5) * nature)
+        return floor(floor((2 * base_stat + IV + floor(EV/4)) * LEVEL / 100 + 5) * NATURE)
     
     def __calculate_scarf(self):
         '''Calculates the speed of a Pokémon holding a Choice Scarf.'''
