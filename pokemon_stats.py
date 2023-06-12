@@ -216,6 +216,27 @@ COMMON_NAMES["wake"] = "walking-wake"
 COMMON_NAMES["ironleaves"] = "iron-leaves"
 COMMON_NAMES["leaves"] = "iron-leaves"
 
+# Names with special characters that do not follow the normal conventions for automating pretty name printing.
+SPECIAL_NAMES = {}
+SPECIAL_NAMES["mime-jr"] = "Mime Jr."
+SPECIAL_NAMES["mr-mime"] = "Mr. Mime"
+SPECIAL_NAMES["farfetchd"] = "Farfetch'd"
+SPECIAL_NAMES["sirfetchd"] = "Sirfetch'd"
+SPECIAL_NAMES["flabebe"] = "Flabébé"
+SPECIAL_NAMES["jangmo-o"] = "Jangmo-o"
+SPECIAL_NAMES["hakamo-o"] = "Hakamo-o"
+SPECIAL_NAMES["kommo-o"] = "Kommo-o"
+SPECIAL_NAMES["type-null"] = "Type: Null"
+SPECIAL_NAMES["mr-rime"] = "Mr. Rime"
+
+# Names with special characters that follow normal conventions for automating pretty name printing.
+HYPHENATED_NAMES = ["ho-oh", "porygon-z", "wo-chien", "chi-yu", "chien-pao", "ting-lu"]
+ALTERNATE_FORMS = ["nidoran", "tauros", "castform", "kyogre", "groudon", "deoxys", "burmy", "wormadam", "cherrim", "rotom", "dialga", "palkia", "giratina",
+                    "shaymin", "basculin", "darmanitan", "tornadus", "thundurus", "landorus", "enamorus", "kyruem", "keldeo", "meloetta", "greninja", "aegislash",
+                    "pumpkaboo", "gourgeist", "zygarde", "hoopa", "lycanroc", "wishiwashi", "minior", "necrozma", "toxtricity",
+                    "eiscue", "zacian", "zamazenta", "eternatus", "urhsifu", "calyrex", "palafin", "gimmighoul"]
+REGION_NAMES = ["mega", "alola", "galar", "hisui", "paldea"]
+
 
 class Pokemon:
     '''
@@ -278,32 +299,12 @@ class Pokemon:
         For example, "Landorus-Therian" instead of "landorus-therian" or "Roaring Moon" instead of "roaring-moon".
         '''
         # Names with special characters.
-        if name == "mime-jr":
-            return "Mime Jr."
-        elif name == "mr-mime":
-            return "Mr. Mime"
-        elif name == "farfetchd":
-            return "Farfetch'd"
-        elif name == "sirfetchd":
-            return "Sirfetch'd"
-        elif name == "flabebe":
-            return "Flabébé"
-        elif name == "type-null":
-            return "Type: Null"
-        elif name == "mr-rime":
-            return "Mr. Rime"
+        if name in SPECIAL_NAMES:
+            return SPECIAL_NAMES[name]
     
         # Names without anything special.
         if len(name.split("-")) == 1:
             return (name[0].upper()) + name[1:]
-        
-        # All Pokémon with alternate forms.
-        hyphenated_names = ["ho-oh", "porygon-z", "wo-chien", "chi-yu", "chien-pao", "ting-lu"]
-        alternate_forms = ["nidoran", "tauros", "castform", "kyogre", "groudon", "deoxys", "burmy", "wormadam", "cherrim", "rotom", "dialga", "palkia", "giratina",
-                           "shaymin", "basculin", "darmanitan", "tornadus", "thundurus", "landorus", "enamorus", "kyruem", "keldeo", "meloetta", "greninja", "aegislash",
-                           "pumpkaboo", "gourgeist", "zygarde", "hoopa", "lycanroc", "jangmo-o", "hakamo-o", "kommo-o" "wishiwashi", "minior", "necrozma", "toxtricity",
-                           "eiscue", "zacian", "zamazenta", "eternatus", "urhsifu", "calyrex", "palafin", "gimmighoul"]
-        region_names = ["mega", "alola", "galar", "hisui", "paldea"]
         
         # Names with multiple parts and/or without special characters.
         pretty_name = ""
@@ -311,16 +312,16 @@ class Pokemon:
         for part in name.split("-"):
             pretty_name += (part[0].upper()) + part[1:]
             if i < len(name.split("-")):
-                if name in hyphenated_names:
+                if name in HYPHENATED_NAMES:
                     pretty_name += "-"
                 else:
                     found = False
-                    for form in alternate_forms:
+                    for form in ALTERNATE_FORMS:
                         if form in name:
                             pretty_name += "-"
                             found = True
                     if not found:
-                        for region in region_names:
+                        for region in REGION_NAMES:
                             if region in name:
                                 pretty_name += "-"
                                 found = True
