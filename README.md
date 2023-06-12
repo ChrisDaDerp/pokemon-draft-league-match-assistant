@@ -13,7 +13,7 @@ Here are two example teams:
 
 
 
-Enter the names of all Pokémon and you will receive a table, sorted in order of base speed and color coded by team. You can even make typos or use some common shorthands
+Enter the names of all Pokémon and you will receive a table, sorted in order of base speed and color coded by team. You can even make typos or use some common shorthands.
 
 ![image](https://github.com/ChrisDaDerp/pokemon-draft-league-match-assistant/assets/44344493/a18b7113-28ba-4d87-9ad6-9c9122a9ce30)
 
