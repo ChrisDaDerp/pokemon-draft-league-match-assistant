@@ -13,11 +13,11 @@ Here are two example teams:
 
 
 
-Enter the names of all Pokémon and you will receive a table, sorted in order of base speed and color coded by team:
+Enter the names of all Pokémon and you will receive a table, sorted in order of base speed and color coded by team. You can even make typos or use some common shorthands
 
 ![image](https://github.com/ChrisDaDerp/pokemon-draft-league-match-assistant/assets/44344493/a18b7113-28ba-4d87-9ad6-9c9122a9ce30)
 
 It will also show you base stats and effective stats, as well as speed while holding a Choice Scarf (or just at +1). No more checking PokemonDB for each individual stat and writing them all on a notepad!
 
 
-This script uses the following Python libraries: requests, math, and tabulate.
+This script uses the following Python libraries: requests, math, tabulate, colorama.
