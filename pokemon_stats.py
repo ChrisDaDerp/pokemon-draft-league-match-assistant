@@ -5,7 +5,7 @@ This will be very useful for draft leagues so you don't have to calculate the
 speed of every single Pokémon you will be facing individually.
 This script is up to date for up to Gen IX, as of 2023-06-11.
 
-@Author ChrisDaDerp
+@Author ducksinc
 '''
 
 import requests
